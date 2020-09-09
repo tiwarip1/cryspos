@@ -1,0 +1,3 @@
+import cryspos
+
+cryspos.cryspos()
