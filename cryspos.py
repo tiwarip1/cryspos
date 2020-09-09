@@ -7,9 +7,9 @@ class cryspos:
 		print("yo, we doin this\n")
 
 		if os.path.isdir('../cryspos_storage'):
-			print("You're good")
+			pass
 		else:
-			print("You need to run collector.sh")
+			print("Running collector.sh")
 			os.system("chmod +x collector.sh")
 			os.system("./collector.sh")
 
@@ -20,11 +20,26 @@ class cryspos:
 		pass
 
 
-	def gather_pos(self,space_group,wyckoff_number):
+	def gather_pos(self,space_group,wyckoff_number=False):
 		'''Goes into the proper directory and takes the file information'''
 
-		pass
+		space_group_file = np.loadtxt('../cryspos_storage/{}.txt'.format(space_group),dtype=str,delimiter='/n',skiprows=18)
+		wyckoff_group_file = []
+
+		if not wyckoff_number:
+			return space_group_file
+
+		for i in space_group_file:
+			if i[0].isalnum() and len(wyckoff_group_file):
+				break
+
+			if wyckoff_number in i or len(wyckoff_group_file):
+				wyckoff_group_file.append(i.strip())
+			
+		return wyckoff_group_file[1:]
 
 
 	def position_to_space_group(self,positions,tolerance):
-		'''Given a set of atomic positions, this'''
+		'''Given a set of atomic positions, this function will look through each space group and see if it fits given a tolerance'''
+
+		pass
